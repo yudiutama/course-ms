@@ -27,8 +27,8 @@ const ClassSchedule = db.define('class_schedule', {
             notEmpty: true
         }
     },
-    date: {
-        type: DataTypes.DATE,
+    day: {
+        type: DataTypes.STRING,
         allowNull: true,
         validate: {
             notEmpty: true

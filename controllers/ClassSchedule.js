@@ -4,7 +4,7 @@ const argon2 = require("argon2");
 exports.getSchedule = async(req, res) => {
     try {
         const response = await Schedule.findOne({
-            attributes: ['id','employee_id', 'product_id', 'start_time', 'end_time', 'date']
+            attributes: ['id','employee_id', 'product_id', 'start_time', 'end_time', 'day']
         });
         res.status(200).json(response);
     } catch (error) {
@@ -15,7 +15,7 @@ exports.getSchedule = async(req, res) => {
 exports.getScheduleById = async(req, res) => {
     try {
         const response = await Schedule.findOne({
-            attributes: ['id','employee_id', 'product_id', 'start_time', 'end_time', 'date'],
+            attributes: ['id','employee_id', 'product_id', 'start_time', 'end_time', 'day'],
             where: {
                 id: req.params.id
             }
@@ -27,13 +27,13 @@ exports.getScheduleById = async(req, res) => {
 }
 
 exports.createSchedule = async(req, res) => {
-    const {id, employee_id, product_id, start_time, end_time, date} = req.body;
+    const {id, employee_id, product_id, start_time, end_time, day} = req.body;
     try {
         await Schedule.create({
             id: id,
             employee_id: employee_id,
             product_id: product_id,
-            date: date,
+            day: day,
             start_time: start_time,
             end_time: end_time
         });
@@ -50,13 +50,13 @@ exports.updateSchedule = async(req, res) => {
         }
     });
     if (!schedule) return res.status(404).json({ msg: "tidak ditemukan" });
-    const {id, employee_id, product_id, start_time, end_time, date} = req.body;
+    const {id, employee_id, product_id, start_time, end_time, day} = req.body;
     try {
         await Schedule.update({
             id: id,
             employee_id: employee_id,
             product_id: product_id,
-            date: date,
+            day: day,
             start_time: start_time,
             end_time: end_time
         }, {
