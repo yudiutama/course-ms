@@ -27,13 +27,6 @@ const Reports = db.define('student_reports', {
             notEmpty: true
         }
     },
-    description: {
-        type: DataTypes.TEXT,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
     score: {
         type: DataTypes.STRING,
         allowNull: false,

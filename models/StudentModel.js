@@ -27,7 +27,7 @@ const Students = db.define('students', {
             notEmpty: true
         }
     },
-    phone_parent: {
+    phone: {
         type: DataTypes.STRING,
         allowNull: false,
         validate: {

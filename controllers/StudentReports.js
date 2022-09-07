@@ -4,7 +4,7 @@ const argon2 = require("argon2");
 exports.getReport = async(req, res) => {
     try {
         const response = await Report.findOne({
-            attributes: ['id', 'unit_id', 'student_id', 'schedule_id', 'description', 'score', 'photo', 'video']
+            attributes: ['id', 'unit_id', 'student_id', 'schedule_id', 'score', 'photo', 'video']
         });
         res.status(200).json(response);
     } catch (error) {
@@ -15,7 +15,7 @@ exports.getReport = async(req, res) => {
 exports.getReportById = async(req, res) => {
     try {
         const response = await Report.findOne({
-            attributes: ['id', 'unit_id', 'student_id', 'schedule_id', 'description', 'score', 'photo', 'video'],
+            attributes: ['id', 'unit_id', 'student_id', 'schedule_id', 'score', 'photo', 'video'],
             where: {
                 id: req.params.id
             }
@@ -34,7 +34,6 @@ exports.createReport = async(req, res) => {
             unit_id: unit_id,
             schedule_id: schedule_id,
             student_id: student_id,
-            description: description,
             score: score,
             photo: photo,
             video: video,
@@ -52,14 +51,13 @@ exports.updateReport = async(req, res) => {
         }
     });
     if (!report) return res.status(404).json({ msg: "tidak ditemukan" });
-    const {id, unit_id, student_id, schedule_id, description, score, photo, video} = req.body;
+    const {id, unit_id, student_id, schedule_id, score, photo, video} = req.body;
     try {
         await Report.update({
              id: id,
              unit_id: unit_id,
             schedule_id: schedule_id,
             student_id: student_id,
-            description: description,
             score: score,
             photo: photo,
             video: video,

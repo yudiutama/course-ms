@@ -4,7 +4,7 @@ const argon2 = require("argon2");
 exports.getStudent = async(req, res) => {
     try {
         const response = await Student.findOne({
-            attributes: ['id', 'user_id', 'name_student', 'phone_parent', 'address','gender', 'age']
+            attributes: ['id', 'user_id', 'name_student', 'phone', 'address','gender', 'age']
         });
         res.status(200).json(response);
     } catch (error) {
@@ -15,7 +15,7 @@ exports.getStudent = async(req, res) => {
 exports.getStudentById = async(req, res) => {
     try {
         const response = await Student.findOne({
-            attributes: ['id', 'user_id', 'name_student', 'phone_parent','address','gender', 'age'],
+            attributes: ['id', 'user_id', 'name_student', 'phone','address','gender', 'age'],
             where: {
                 id: req.params.id
             }
@@ -27,13 +27,13 @@ exports.getStudentById = async(req, res) => {
 }
 
 exports.createStudent = async(req, res) => {
-    const {id,user_id, name_student, phone_parent, phone, address,gender, age, } = req.body;
+    const {id,user_id, name_student, phone, address,gender, age, } = req.body;
     try {
         await Student.create({
             id: id,
             user_id: user_id,
             name_student: name_student,
-            phone_parent: phone_parent,
+            phone: phone,
             address: address,
             gender: gender,
             age: age,
@@ -51,13 +51,13 @@ exports.updateStudent = async(req, res) => {
         }
     });
     if (!student) return res.status(404).json({ msg: "tidak ditemukan" });
-    const {id, user_id, name_student, phone_parent, phone, address, gender, age, } = req.body;
+    const {id, user_id, name_student, phone, address, gender, age, } = req.body;
     try {
         await Student.update({
             id: id,
             user_id: user_id,
             name_student: name_student,
-            phone_parent: phone_parent,
+            phone: phone,
             address: address,
             gender: gender,
             age: age,

@@ -34,6 +34,20 @@ const Notes = db.define('notes', {
             notEmpty: true
         }
     },
+    reciever_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
+    author_id: {
+        type: DataTypes.INTEGER,
+        allowNull: false,
+        validate: {
+            notEmpty: true
+        }
+    },
 }, {
     freezeTableName: true,
     timestamps: 'true',
