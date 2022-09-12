@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Aug 18, 2022 at 01:48 AM
+-- Generation Time: Sep 12, 2022 at 02:14 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -45,7 +45,7 @@ CREATE TABLE `class_schedule` (
   `id` int(11) NOT NULL,
   `employee_id` int(11) NOT NULL,
   `product_id` int(11) NOT NULL,
-  `day` varchar(10) NOT NULL,
+  `day` varchar(7) NOT NULL,
   `start_time` time NOT NULL,
   `end_time` time NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
@@ -57,8 +57,8 @@ CREATE TABLE `class_schedule` (
 --
 
 INSERT INTO `class_schedule` (`id`, `employee_id`, `product_id`, `day`, `start_time`, `end_time`, `created_at`, `update_at`) VALUES
-(1, 1, 1, 'rabu', '13:00:00', '15:00:00', '2022-08-15 21:45:36', '2022-08-15 21:45:36'),
-(2, 2, 1, 'senin', '13:30:00', '15:30:00', '2022-08-15 22:13:34', '2022-08-15 22:13:34');
+(7, 3, 1, 'senin', '13:00:00', '16:00:00', '2022-09-01 03:49:45', '2022-09-01 04:13:01'),
+(8, 4, 1, 'selasa', '13:00:00', '15:00:00', '2022-09-04 23:56:53', '2022-09-04 23:56:53');
 
 -- --------------------------------------------------------
 
@@ -68,7 +68,7 @@ INSERT INTO `class_schedule` (`id`, `employee_id`, `product_id`, `day`, `start_t
 
 CREATE TABLE `employee` (
   `id` int(11) NOT NULL,
-  `user_id` varchar(11) NOT NULL,
+  `user_id` int(11) NOT NULL,
   `name_employee` varchar(50) NOT NULL,
   `address` varchar(50) NOT NULL,
   `gender` varchar(10) NOT NULL,
@@ -83,9 +83,8 @@ CREATE TABLE `employee` (
 --
 
 INSERT INTO `employee` (`id`, `user_id`, `name_employee`, `address`, `gender`, `phone`, `departement`, `created_at`, `update_at`) VALUES
-(1, '1', 'Yudi', 'Singaraja', 'Male', '089123123123', 'IT', '2022-08-15 16:29:10', '2022-08-15 16:29:10'),
-(2, '2', 'Alvin', 'Karangasem', 'Male', '08978678678', 'IT', '2022-08-15 21:53:00', '2022-08-15 21:53:00'),
-(3, '3', 'Wahyu', 'Singaraja', 'Male', '07612312312', 'Sales', '2022-08-15 21:53:40', '2022-08-15 21:53:40');
+(3, 3, 'Wahyu', 'Singaraja', 'Male', '07612312312', 'Sales', '2022-08-15 21:53:40', '2022-08-15 21:53:40'),
+(4, 2, 'Alvin', 'Karangasem', 'Male', '089123123123', 'Sales', '2022-09-01 03:50:28', '2022-09-01 03:50:28');
 
 -- --------------------------------------------------------
 
@@ -95,42 +94,22 @@ INSERT INTO `employee` (`id`, `user_id`, `name_employee`, `address`, `gender`, `
 
 CREATE TABLE `notes` (
   `id` int(11) NOT NULL,
-  `schedule_id` int(11) NOT NULL,
   `title` varchar(100) NOT NULL,
   `description` text NOT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `update_at` timestamp NULL DEFAULT current_timestamp(),
-  `creator_id` int(11) NOT NULL,
-  `student_id` int(6) NOT NULL
+  `author_id` int(11) NOT NULL,
+  `reciever_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data for table `notes`
 --
 
-INSERT INTO `notes` (`id`, `schedule_id`, `title`, `description`, `created_at`, `update_at`, `creator_id`, `student_id`) VALUES
-(4, 1, 'Coding', 'berlatih computational thinking', '2022-08-15 22:44:40', '2022-08-15 22:53:13', 0, 0);
-
--- --------------------------------------------------------
-
---
--- Table structure for table `note_users`
---
-
-CREATE TABLE `note_users` (
-  `id` int(11) NOT NULL,
-  `note_id` int(11) NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `create_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
-  `update_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp()
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
---
--- Dumping data for table `note_users`
---
-
-INSERT INTO `note_users` (`id`, `note_id`, `user_id`, `create_at`, `update_at`) VALUES
-(3, 4, 2, '2022-08-16 06:09:32', '2022-08-16 06:09:32');
+INSERT INTO `notes` (`id`, `title`, `description`, `created_at`, `update_at`, `author_id`, `reciever_id`) VALUES
+(5, 'PHP', 'Masih harus belajar menghubungkan beda halaman', '2022-08-29 00:13:28', '2022-08-29 00:13:28', 2, 5),
+(7, 'update ke-2', 'ini adalah update note ke-2', '2022-08-29 00:18:41', '2022-09-05 00:31:52', 2, 5),
+(8, 'update', 'ini adalah update note', '2022-09-05 00:30:11', '2022-09-05 00:30:11', 3, 5);
 
 -- --------------------------------------------------------
 
@@ -227,7 +206,7 @@ CREATE TABLE `students` (
   `id` int(11) NOT NULL,
   `user_id` int(11) NOT NULL,
   `name_student` varchar(50) NOT NULL,
-  `phone_parent` varchar(15) NOT NULL,
+  `phone` varchar(15) NOT NULL,
   `address` varchar(50) NOT NULL,
   `age` int(2) NOT NULL,
   `gender` varchar(10) NOT NULL,
@@ -239,9 +218,8 @@ CREATE TABLE `students` (
 -- Dumping data for table `students`
 --
 
-INSERT INTO `students` (`id`, `user_id`, `name_student`, `phone_parent`, `address`, `age`, `gender`, `created_at`, `update_at`) VALUES
-(1, 1, 'Alvin', '89123123', 'Denpasar', 15, 'Male', '2022-08-16 02:50:48', '2022-08-16 02:50:48'),
-(3, 3, 'Yudi', '+6287123123123', 'Singaraja', 13, 'Male', '2022-08-16 03:00:21', '2022-08-16 03:00:21');
+INSERT INTO `students` (`id`, `user_id`, `name_student`, `phone`, `address`, `age`, `gender`, `created_at`, `update_at`) VALUES
+(5, 2, 'Alvin', '+6289123121290', 'Denpasar', 20, 'Male', '2022-09-05 03:08:15', '2022-09-11 08:18:36');
 
 -- --------------------------------------------------------
 
@@ -263,7 +241,8 @@ CREATE TABLE `student_bookings` (
 --
 
 INSERT INTO `student_bookings` (`id`, `student_id`, `schedule_id`, `status_book`, `created_at`, `update_at`) VALUES
-(3, 3, 1, 'success', '2022-08-16 03:15:24', '2022-08-16 03:15:57');
+(9, 5, 7, 'Process', '2022-09-07 06:09:59', '2022-09-07 06:09:59'),
+(10, 5, 8, 'Pending', '2022-09-07 06:10:35', '2022-09-07 06:12:19');
 
 -- --------------------------------------------------------
 
@@ -276,7 +255,6 @@ CREATE TABLE `student_reports` (
   `unit_id` int(11) NOT NULL,
   `student_id` int(11) NOT NULL,
   `schedule_id` int(11) NOT NULL,
-  `description` text NOT NULL,
   `score` varchar(5) NOT NULL,
   `photo` varchar(255) NOT NULL,
   `video` varchar(255) NOT NULL,
@@ -288,9 +266,9 @@ CREATE TABLE `student_reports` (
 -- Dumping data for table `student_reports`
 --
 
-INSERT INTO `student_reports` (`id`, `unit_id`, `student_id`, `schedule_id`, `description`, `score`, `photo`, `video`, `created_at`, `update_at`) VALUES
-(3, 1, 2, 0, 'test', '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:22:58', '2022-08-16 04:22:58'),
-(4, 1, 3, 0, 'test', '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:23:05', '2022-08-16 04:23:05');
+INSERT INTO `student_reports` (`id`, `unit_id`, `student_id`, `schedule_id`, `score`, `photo`, `video`, `created_at`, `update_at`) VALUES
+(3, 1, 2, 0, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:22:58', '2022-08-16 04:22:58'),
+(4, 1, 3, 0, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:23:05', '2022-08-16 04:23:05');
 
 -- --------------------------------------------------------
 
@@ -335,7 +313,6 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `email`, `password`, `created_at`, `updated_at`, `role`) VALUES
-(1, 'test@gmail.com', '12123', '2022-08-10 04:27:56', '2022-08-10 04:27:56', 'Admin'),
 (2, 'alvin@gmail.com', 'Qwe12', '2022-08-16 02:56:46', '2022-08-16 02:56:46', ''),
 (3, 'yudi@gmail.com', 'Ewq321', '2022-08-16 02:57:07', '2022-08-16 02:57:07', '');
 
@@ -361,22 +338,16 @@ ALTER TABLE `class_schedule`
 -- Indexes for table `employee`
 --
 ALTER TABLE `employee`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `user_id` (`user_id`);
 
 --
 -- Indexes for table `notes`
 --
 ALTER TABLE `notes`
   ADD PRIMARY KEY (`id`),
-  ADD KEY `notes_ibfk_1` (`schedule_id`);
-
---
--- Indexes for table `note_users`
---
-ALTER TABLE `note_users`
-  ADD PRIMARY KEY (`id`),
-  ADD KEY `note_id` (`note_id`),
-  ADD KEY `user_id` (`user_id`);
+  ADD KEY `author_id` (`author_id`),
+  ADD KEY `reciever_id` (`reciever_id`);
 
 --
 -- Indexes for table `products`
@@ -443,25 +414,19 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `class_schedule`
 --
 ALTER TABLE `class_schedule`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `employee`
 --
 ALTER TABLE `employee`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `notes`
 --
 ALTER TABLE `notes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `note_users`
---
-ALTER TABLE `note_users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
 
 --
 -- AUTO_INCREMENT for table `products`
@@ -491,13 +456,13 @@ ALTER TABLE `roles`
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `student_bookings`
 --
 ALTER TABLE `student_bookings`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
 
 --
 -- AUTO_INCREMENT for table `student_reports`
@@ -529,17 +494,17 @@ ALTER TABLE `class_schedule`
   ADD CONSTRAINT `class_schedule_ibfk_2` FOREIGN KEY (`product_id`) REFERENCES `products` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
+-- Constraints for table `employee`
+--
+ALTER TABLE `employee`
+  ADD CONSTRAINT `employee_ibfk_1` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
 -- Constraints for table `notes`
 --
 ALTER TABLE `notes`
-  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `class_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
-
---
--- Constraints for table `note_users`
---
-ALTER TABLE `note_users`
-  ADD CONSTRAINT `note_users_ibfk_1` FOREIGN KEY (`note_id`) REFERENCES `notes` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
-  ADD CONSTRAINT `note_users_ibfk_2` FOREIGN KEY (`user_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `notes_ibfk_1` FOREIGN KEY (`author_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `notes_ibfk_2` FOREIGN KEY (`reciever_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 
 --
 -- Constraints for table `students`
