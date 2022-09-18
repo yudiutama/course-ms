@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Sep 12, 2022 at 02:14 AM
+-- Generation Time: Sep 12, 2022 at 08:15 AM
 -- Server version: 10.4.11-MariaDB
 -- PHP Version: 7.4.4
 
@@ -175,6 +175,17 @@ CREATE TABLE `product_units` (
   `update_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
+--
+-- Dumping data for table `product_units`
+--
+
+INSERT INTO `product_units` (`id`, `name`, `order_unit`, `created_at`, `update_at`) VALUES
+(1, 'PHP', 1, '2022-09-12 05:57:52', '2022-09-12 05:57:52'),
+(2, 'CSS', 2, '2022-09-12 05:58:26', '2022-09-12 05:58:26'),
+(3, 'HTML', 3, '2022-09-12 05:58:53', '2022-09-12 05:58:53'),
+(4, 'OOP', 4, '2022-09-12 06:10:00', '2022-09-12 06:10:00'),
+(5, 'C++', 5, '2022-09-12 06:11:41', '2022-09-12 06:11:41');
+
 -- --------------------------------------------------------
 
 --
@@ -256,8 +267,8 @@ CREATE TABLE `student_reports` (
   `student_id` int(11) NOT NULL,
   `schedule_id` int(11) NOT NULL,
   `score` varchar(5) NOT NULL,
-  `photo` varchar(255) NOT NULL,
-  `video` varchar(255) NOT NULL,
+  `photo` varchar(255) DEFAULT NULL,
+  `video` varchar(255) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT current_timestamp(),
   `update_at` timestamp NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -267,8 +278,11 @@ CREATE TABLE `student_reports` (
 --
 
 INSERT INTO `student_reports` (`id`, `unit_id`, `student_id`, `schedule_id`, `score`, `photo`, `video`, `created_at`, `update_at`) VALUES
-(3, 1, 2, 0, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:22:58', '2022-08-16 04:22:58'),
-(4, 1, 3, 0, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:23:05', '2022-08-16 04:23:05');
+(3, 1, 5, 7, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:22:58', '2022-08-16 04:22:58'),
+(4, 2, 5, 8, '90', 'https://drive.google.com/file/d/1WgbOAlqaPQhsxh8KzmUK3kcke57osWC9/view?usp=sharing', 'https://drive.google.com/file/d/11h_QnV48wGU-Wz0Zp1Y6vwSso5eMjm8u/view?usp=sharing', '2022-08-16 04:23:05', '2022-08-16 04:23:05'),
+(5, 3, 5, 7, '80', '-', '-', '2022-09-12 06:00:57', '2022-09-12 06:00:57'),
+(6, 4, 5, 8, '85', NULL, NULL, '2022-09-12 06:14:10', '2022-09-12 06:14:10'),
+(7, 5, 5, 8, '90', NULL, NULL, '2022-09-12 06:14:59', '2022-09-12 06:14:59');
 
 -- --------------------------------------------------------
 
@@ -392,7 +406,10 @@ ALTER TABLE `student_bookings`
 -- Indexes for table `student_reports`
 --
 ALTER TABLE `student_reports`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `schedule_id` (`schedule_id`),
+  ADD KEY `student_id` (`student_id`),
+  ADD KEY `unit_id` (`unit_id`);
 
 --
 -- Indexes for table `tutorials`
@@ -444,7 +461,7 @@ ALTER TABLE `product_category`
 -- AUTO_INCREMENT for table `product_units`
 --
 ALTER TABLE `product_units`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT for table `roles`
@@ -468,7 +485,7 @@ ALTER TABLE `student_bookings`
 -- AUTO_INCREMENT for table `student_reports`
 --
 ALTER TABLE `student_reports`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
 -- AUTO_INCREMENT for table `tutorials`
@@ -518,6 +535,14 @@ ALTER TABLE `students`
 ALTER TABLE `student_bookings`
   ADD CONSTRAINT `student_bookings_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `class_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   ADD CONSTRAINT `student_bookings_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+
+--
+-- Constraints for table `student_reports`
+--
+ALTER TABLE `student_reports`
+  ADD CONSTRAINT `student_reports_ibfk_1` FOREIGN KEY (`schedule_id`) REFERENCES `class_schedule` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_reports_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  ADD CONSTRAINT `student_reports_ibfk_3` FOREIGN KEY (`unit_id`) REFERENCES `product_units` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
