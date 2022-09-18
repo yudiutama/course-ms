@@ -3,7 +3,7 @@ const argon2 = require("argon2");
 
 exports.getStudent = async(req, res) => {
     try {
-        const response = await Student.findOne({
+        const response = await Student.findAll({
             attributes: ['id', 'user_id', 'name_student', 'phone', 'address','gender', 'age']
         });
         res.status(200).json(response);
@@ -45,7 +45,7 @@ exports.createStudent = async(req, res) => {
 }
 
 exports.updateStudent = async(req, res) => {
-    const student = await Student.findOne({
+    const student = await Student.findAll({
         where: {
             id: req.params.id
         }
