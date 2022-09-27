@@ -27,7 +27,7 @@ exports.getReportById = async(req, res) => {
 }
 
 exports.createReport = async(req, res) => {
-    const {id, unit_id, student_id, schedule_id, description, score, photo, video} = req.body;
+    const {id, unit_id, student_id, schedule_id, score, photo, video} = req.body;
     try {
         await Report.create({
             id: id,

@@ -13,13 +13,6 @@ const Notes = db.define('notes', {
         },
         primaryKey: true
     },
-    schedule_id: {
-        type: DataTypes.INTEGER,
-        allowNull: false,
-        validate: {
-            notEmpty: true
-        }
-    },
     title: {
         type: DataTypes.STRING,
         allowNull: false,

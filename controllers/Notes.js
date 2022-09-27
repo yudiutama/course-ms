@@ -4,7 +4,7 @@ const argon2 = require("argon2");
 exports.getNotes = async(req, res) => {
     try {
         const response = await Note.findOne({
-            attributes: ['id', 'schedule_id', 'title', 'description', 'reciever_id', 'author_id']
+            attributes: ['id', 'title', 'description', 'reciever_id', 'author_id']
         });
         res.status(200).json(response);
     } catch (error) {
@@ -15,7 +15,7 @@ exports.getNotes = async(req, res) => {
 exports.getNoteById = async(req, res) => {
     try {
         const response = await Note.findOne({
-            attributes: ['id', 'schedule_id', 'title', 'description', 'reciever_id', 'author_id'],
+            attributes: ['id', 'title', 'description', 'reciever_id', 'author_id'],
             where: {
                 id: req.params.id
             }
@@ -27,11 +27,10 @@ exports.getNoteById = async(req, res) => {
 }
 
 exports.createNote = async(req, res) => {
-    const {id, schedule_id, title, description, reciever_id, author_id} = req.body;
+    const {id, title, description, reciever_id, author_id} = req.body;
     try {
         await Note.create({
             id: id,
-            schedule_id: schedule_id,
             title: title,
             description: description,
             reciever_id: reciever_id,
@@ -50,10 +49,9 @@ exports.updateNote = async(req, res) => {
         }
     });
     if (!note) return res.status(404).json({ msg: "Note tidak ditemukan" });
-    const { schedule_id, title, description, reciever_id, author_id } = req.body;
+    const {title, description, reciever_id, author_id } = req.body;
     try {
         await Note.update({
-            schedule_id: schedule_id,
             title: title,
             description: description,
             reciever_id: reciever_id,
