@@ -1,6 +1,6 @@
 const bodyParser = require('body-parser');
 const express = require("express");
-const sequelize = require('sequelize');
+//const sequelize = require('sequelize');
 const app = express();
 // parse application/json
 app.use(bodyParser.json());
@@ -9,7 +9,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 const Sequelize = require('sequelize');
 // initialize an instance of Sequelize
 const db = new Sequelize({
-    database: 'cms',
+    database: 'course_ms',
     username: 'root',
     password: '123123',
     dialect: 'mysql',

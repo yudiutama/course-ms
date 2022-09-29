@@ -1,5 +1,5 @@
 const Report = require("../models/StudentReportsModel.js");
-const argon2 = require("argon2");
+//const argon2 = require("argon2");
 
 exports.getReport = async(req, res) => {
     try {
@@ -26,14 +26,22 @@ exports.getReportById = async(req, res) => {
     }
 }
 
+// exports.getProgressById = async(req, res) => {
+//     try{
+        
+//     }
+
+//     }
+
 exports.createReport = async(req, res) => {
-    const {id, unit_id, student_id, schedule_id, score, photo, video} = req.body;
+    const {id, unit_id, student_id, schedule_id, employee_id, score, photo, video} = req.body;
     try {
         await Report.create({
             id: id,
             unit_id: unit_id,
             schedule_id: schedule_id,
             student_id: student_id,
+            employee_id: employee_id,
             score: score,
             photo: photo,
             video: video,
