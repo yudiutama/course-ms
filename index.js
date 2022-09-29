@@ -10,6 +10,7 @@ const AuthRoute = require("./routes/AuthRoute.js")
 const BookingRoute = require("./routes/BookingRoute.js")
 const StudentRoute = require("./routes/StudentRoute.js")
 const ReportTeacher = require("./routes/ReportTeacherRoute")
+const ReportCourseRoute = require("./routes/ReportCourseRoute")
 const ReportUnitRoute = require("./routes/ReportUnitRoute")
 const SequelizeStore = require("connect-session-sequelize")
 const StudentReportRoute = require("./routes/StudentReportRoute.js")
@@ -40,6 +41,7 @@ app.use(StudentReportRoute);
 app.use(ClassScheduleRoute);
 app.use(ReportTeacher);
 app.use(ReportUnitRoute);
+app.use(ReportCourseRoute);
 
 // store.sync();
 app.listen(port, () => {
